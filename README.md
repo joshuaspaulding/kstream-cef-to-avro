@@ -1,0 +1,1 @@
+# Skeleton Kafka Stream Application
