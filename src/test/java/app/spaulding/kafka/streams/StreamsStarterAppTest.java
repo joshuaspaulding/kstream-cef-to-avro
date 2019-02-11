@@ -21,15 +21,13 @@ import org.junit.Test;
 public class StreamsStarterAppTest {
 
   private TopologyTestDriver testDriver;
-  private StringDeserializer stringDeserializer = new StringDeserializer();
   private ConsumerRecordFactory<String, String> recordFactory = new ConsumerRecordFactory<>(
       new StringSerializer(), new StringSerializer()
   );
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
 
-    // setup test driver
     Properties config = new Properties();
     config.setProperty(StreamsConfig.APPLICATION_ID_CONFIG, "streams-starter-app");
     config.setProperty(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "dummy:1234");
@@ -48,7 +46,7 @@ public class StreamsStarterAppTest {
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDown() {
     testDriver.close();
   }
 
@@ -56,8 +54,8 @@ public class StreamsStarterAppTest {
   public void shouldFlushStoreForFirstInput() {
     testDriver.pipeInput(recordFactory.create("streams-input", null, "hello"));
     OutputVerifier.compareKeyValue(testDriver.readOutput("streams-output",
-        stringDeserializer,
-        stringDeserializer),
+        new StringDeserializer(),
+        new StringDeserializer()),
         null,
         "hello");
     Assert.assertNull(testDriver.readOutput("streams-output"));
