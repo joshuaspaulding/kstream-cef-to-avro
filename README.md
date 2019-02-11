@@ -3,8 +3,8 @@ Base skeleton application structure for a Kafka Streams Application.
 
 To build and run application
 ```bash
-$> ./gradlew build
-$> java -jar build/libs/kafka-streams-starterapp-fat-1.0-SNAPSHOT.jar
+➜  ~ ./gradlew build
+➜  ~ java -jar build/libs/kafka-streams-starterapp-fat-1.0-SNAPSHOT.jar
 ```
 
 The starter application simply consumes from an input topic and produces to the output topic.
@@ -36,4 +36,35 @@ Additional application logic goes here:
 		Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
 
 	}
+```
+
+Test sample application using Confluent CLI:
+1. Start Kafka Cluster
+```bash
+➜  ~ confluent start kafka
+This CLI is intended for development only, not for production
+https://docs.confluent.io/current/cli/index.html
+
+Using CONFLUENT_CURRENT: /tmp/confluent.SbpXQ9A4
+Starting zookeeper
+zookeeper is [UP]
+Starting kafka
+kafka is [UP]
+```
+2. Start confluent consumer cli
+```bash
+➜  ~ confluent consume streams-output
+This CLI is intended for development only, not for production
+https://docs.confluent.io/current/cli/index.html
+
+hello
+```
+3. Start confluent producer cli
+```bash
+➜  ~ confluent produce streams-input
+This CLI is intended for development only, not for production
+https://docs.confluent.io/current/cli/index.html
+
+>hello
+>
 ```
