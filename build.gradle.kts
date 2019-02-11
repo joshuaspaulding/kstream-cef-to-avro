@@ -25,7 +25,7 @@ configure<JavaPluginConvention> {
 val fatJar = task("fatJar", type = Jar::class) {
     baseName = "${project.name}-fat"
     manifest {
-        attributes["Main-Class"] = "StreamsStarterApp"
+        attributes["Main-Class"] = "app.spaulding.kafka.streams.StreamsStarterApp"
     }
     from(configurations.runtime.map({ if (it.isDirectory) it else zipTree(it) }))
     with(tasks["jar"] as CopySpec)
