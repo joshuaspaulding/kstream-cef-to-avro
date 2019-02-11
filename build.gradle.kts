@@ -11,6 +11,7 @@ repositories {
 
 dependencies {
     compile("org.apache.kafka:kafka-streams:2.1.0")
+    testCompile("org.apache.kafka:kafka-streams-test-utils:2.1.0")
     testCompile("junit", "junit", "4.12")
 }
 
