@@ -1,5 +1,6 @@
 plugins {
     java
+    application
 }
 
 group = "spaulding"
@@ -11,8 +12,13 @@ repositories {
 
 dependencies {
     compile("org.apache.kafka:kafka-streams:2.1.0")
-    testCompile("org.apache.kafka:kafka-streams-test-utils:2.1.0")
+    compile("org.slf4j:slf4j-simple:1.7.25")
+      testCompile("org.apache.kafka:kafka-streams-test-utils:2.1.0")
     testCompile("junit", "junit", "4.12")
+}
+
+application {
+  mainClassName = "app.spaulding.kafka.streams.StreamsStarterApp"
 }
 
 configurations.all {
