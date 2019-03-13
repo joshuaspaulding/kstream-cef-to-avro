@@ -1,13 +1,20 @@
 package app.spaulding.kafka.streams;
 
+import java.util.Collections;
+import java.util.Map;
 import java.util.Properties;
 
+import app.spaulding.cef.avro.CEF;
+import io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.kstream.KStream;
+import org.apache.kafka.streams.kstream.Produced;
+
+import static app.spaulding.cef.CEFParser.parseToCEF;
 
 /**
  * Demo Kakfa Streams app. Foundation for the other Stream classes.
@@ -28,9 +35,16 @@ public class StreamsStarterApp {
 
 		StreamsBuilder builder = new StreamsBuilder();
 
-		KStream<String, String> kStream = builder.stream("streams-input");
-		// do stuff
-		kStream.to("streams-output");
+		KStream<String, String> source = builder.stream("cef");
+		KStream<String, CEF> kStream = source.mapValues(value -> parseToCEF(value));
+
+		// Override default String serde
+		final Map<String, String> serdeConfig = Collections.singletonMap("schema.registry.url",
+				"http://localhost:8081");
+		final SpecificAvroSerde<CEF> cefSpecificAvroSerde = new SpecificAvroSerde<CEF>();
+		cefSpecificAvroSerde.configure(serdeConfig, false);
+
+		kStream.to("kstream-cef-avro", Produced.valueSerde(cefSpecificAvroSerde));
 
 		KafkaStreams streams = new KafkaStreams(builder.build(), config);
 		streams.cleanUp(); // only do this in dev - not in prod

@@ -1,0 +1,15 @@
+{
+  "type": "record",
+  "name": "CEF",
+  "namespace": "app.spaulding.cef.avro",
+  "fields": [
+	{ "name": "severity", "type": "string"},
+	{ "name": "deviceVendor", "type": "string"},
+	{ "name": "name", "type": "string"},
+	{ "name": "deviceProduct", "type": "string"},
+	{ "name": "deviceVersion", "type": "string"},
+	{ "name": "version", "type": "int"},
+	{ "name": "deviceEventClassId", "type": "string"},
+	{ "name": "extension", "type": { "type": "map", "values": "string"}}
+  ]
+}
