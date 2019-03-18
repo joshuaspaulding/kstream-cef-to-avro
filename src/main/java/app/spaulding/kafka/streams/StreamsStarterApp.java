@@ -9,7 +9,6 @@ import app.spaulding.cef.avro.CEF;
 import io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde;
 import org.apache.commons.configuration2.Configuration;
 import org.apache.commons.configuration2.builder.fluent.Configurations;
-import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
